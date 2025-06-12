@@ -3,10 +3,12 @@ import os
 import time
 import subprocess
 from datetime import datetime
+from dotenv import load_dotenv
 
-# Configuration
-leetcodeSession = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfYXV0aF91c2VyX2lkIjoiMTI0NjY0NDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjVhODkyOGZlMDQ2MDI4NzA4NTM4YzQzMDIzMzljMTE5NzE1MGE4MzM3N2I4MmQ5YmNlZDA4NDRiMTM2MTA0ZTIiLCJzZXNzaW9uX3V1aWQiOiIxZjg2NDU0NCIsImlkIjoxMjQ2NjQ0NywiZW1haWwiOiJhZHJpYW5kcmFnMTk5MkBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImFkcmlhbmRyYWcxOCIsInVzZXJfc2x1ZyI6ImFkcmlhbmRyYWcxOCIsImF2YXRhciI6Imh0dHBzOi8vYXNzZXRzLmxlZXRjb2RlLmNvbS91c2Vycy9kZWZhdWx0X2F2YXRhci5qcGciLCJyZWZyZXNoZWRfYXQiOjE3NDk2MjIyNzUsImlwIjoiMmEwMjoyZjAwOjQwYTo5ZjAwOmM4ODM6ZjJlOToxNWM0OjM0NGIiLCJpZGVudGl0eSI6IjllYTg2Y2M4ZmRkYTI4OTViOWUzOGI5YWI1MGM5YzY2IiwiZGV2aWNlX3dpdGhfaXAiOlsiZTk4OTgyNGMzMjcyMWUyNDYzMDIxMmVlNmE4NWY4OGQiLCIyYTAyOjJmMDA6NDBhOjlmMDA6Yzg4MzpmMmU5OjE1YzQ6MzQ0YiJdLCJfc2Vzc2lvbl9leHBpcnkiOjEyMDk2MDB9.piNGSjubiiXut0EeYKGboM4sMgz1foGn6Fa04fmbTRw"
-csrfToken = "37onagxj7WPS0vDc9PjRqgNFTVNzqAnmNeL2uTHdQGKo91FZrHqupQbxIxbUF1hx"
+load_dotenv()
+
+leetcodeSession = os.environ.get("LEETCODE_SESSION")
+csrfToken = os.environ.get("CSRF_TOKEN")
 BASE_URL = "https://leetcode.com"
 problemsDir = "Problems"
 BATCH_SIZE = 20
@@ -79,11 +81,6 @@ def saveSubmissionToFile(submission):
 
 def isFileCommitted(filepath):
     try:
-        # result = subprocess.run(["git", "ls-files", filepath], capture_output=True, text=True)
-        # print(filepath, result)
-        # if result.stdout != 0 or result.stdout:  # File not tracked
-        #     return False
-        # Check commit history for the file
         result = subprocess.run(["git", "log", "--oneline", filepath], capture_output=True, text=True)
         print(2, filepath, result)
         return result.returncode == 0 and result.stdout
@@ -121,13 +118,13 @@ def main():
         commitSolution(filepath, timestamp)
         totalSubmissions += 1
 
-    subprocess.run(["git", "checkout", "main"], check=True)
+    # subprocess.run(["git", "checkout", "main"], check=True)
 
-    try:
-        subprocess.run(["git", "merge", "--no-ff", "--allow-unrelated-histories", tempBranch], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Warning: Merge failed with error: {e}. Attempting force merge.")
-        subprocess.run(["git", "merge", "--allow-unrelated-histories", tempBranch], check=True)
+    # try:
+    #     subprocess.run(["git", "merge", "--no-ff", "--allow-unrelated-histories", tempBranch], check=True)
+    # except subprocess.CalledProcessError as e:
+    #     print(f"Warning: Merge failed with error: {e}. Attempting force merge.")
+    #     subprocess.run(["git", "merge", "--allow-unrelated-histories", tempBranch], check=True)
     # subprocess.run(["git", "branch", "-D", tempBranch], check=True)
 
     # Push to remote (uncomment to enable)
