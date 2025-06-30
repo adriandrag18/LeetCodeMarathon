@@ -14,10 +14,10 @@ problemsDir = "Problems"
 BATCH_SIZE = 20
 SLEEP_TIME = 2
 startOffset = 0
-LIMIT = 2000
+LIMIT = 600
 EMAIL = "66696874+adrianandrag18@users.noreply.github.com"
 USERNAME = "adrianandrag18"
-extMap = {"python3": ".py", "cpp": ".cpp", "go": ".go"}
+extMap = {"python3": ".py", "cpp": ".cpp", "golang": ".go", "pandas": ".pandas.py"}
 
 def getAcceptedSubmissions():
     headers = {
@@ -35,7 +35,7 @@ def getAcceptedSubmissions():
             print(f"Failed at offset {offset}: {response.status_code} {response.reason}")
             break
         data = response.json()
-        submissions = [s for s in data["submissions_dump"] if s["status_display"] == "Accepted"][:LIMIT]
+        submissions = [s for s in data["submissions_dump"] if s["status_display"] == "Accepted"][:LIMIT - offset]
         for submission in submissions:
             yield submission
         if not data.get("has_next"):
