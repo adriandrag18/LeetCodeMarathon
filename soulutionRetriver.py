@@ -118,14 +118,14 @@ def main():
         commitSolution(filepath, timestamp)
         totalSubmissions += 1
 
-    # subprocess.run(["git", "checkout", "main"], check=True)
+    subprocess.run(["git", "checkout", "main"], check=True)
 
-    # try:
-    #     subprocess.run(["git", "merge", "--no-ff", "--allow-unrelated-histories", tempBranch], check=True)
-    # except subprocess.CalledProcessError as e:
-    #     print(f"Warning: Merge failed with error: {e}. Attempting force merge.")
-    #     subprocess.run(["git", "merge", "--allow-unrelated-histories", tempBranch], check=True)
-    # subprocess.run(["git", "branch", "-D", tempBranch], check=True)
+    try:
+        subprocess.run(["git", "merge", "--no-ff", "--allow-unrelated-histories", tempBranch], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Warning: Merge failed with error: {e}. Attempting force merge.")
+        subprocess.run(["git", "merge", "--allow-unrelated-histories", tempBranch], check=True)
+    subprocess.run(["git", "branch", "-D", tempBranch], check=True)
 
     # Push to remote (uncomment to enable)
     # subprocess.run(["git", "push", "origin", "main", "--force"], check=True)
