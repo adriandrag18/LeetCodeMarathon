@@ -1,0 +1,10 @@
+# title: Recyclable and Low Fat Products
+# timestamp: 2025-07-04 12:45:55
+# problemUrl: https://leetcode.com/problems/recyclable-and-low-fat-products/
+# memory: 0.0B
+# runtime: 484 ms
+
+# Write your MySQL query statement below
+select product_id
+from Products 
+where low_fats = 'Y' and recyclable = 'Y';
