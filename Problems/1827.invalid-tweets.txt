@@ -1,0 +1,10 @@
+# title: Invalid Tweets
+# timestamp: 2025-07-04 12:51:28
+# problemUrl: https://leetcode.com/problems/invalid-tweets/
+# memory: 0.0B
+# runtime: 598 ms
+
+# Write your MySQL query statement below
+select tweet_id
+from Tweets
+where length(content) > 15;
