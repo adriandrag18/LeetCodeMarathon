@@ -1,0 +1,10 @@
+# title: Find Customer Referee
+# timestamp: 2025-07-04 12:45:38
+# problemUrl: https://leetcode.com/problems/find-customer-referee/
+# memory: 0.0B
+# runtime: 468 ms
+
+# Write your MySQL query statement below
+select name
+from Customer
+where referee_id != 2 or referee_id is null;
